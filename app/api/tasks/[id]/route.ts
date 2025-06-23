@@ -6,19 +6,20 @@ import mongoose from 'mongoose'
 // GET - Buscar tarefa por ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
     await dbConnect()
     
-    if (!mongoose.isValidObjectId(params.id)) {
+    if (!mongoose.isValidObjectId(id)) {
       return NextResponse.json(
         { success: false, error: 'ID inválido' },
         { status: 400 }
       )
     }
     
-    const task = await Task.findById(params.id).populate('userId', 'name email')
+    const task = await Task.findById(id).populate('userId', 'name email')
     
     if (!task) {
       return NextResponse.json(
@@ -42,12 +43,13 @@ export async function GET(
 // PUT - Atualizar tarefa
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await dbConnect()
     
-    if (!mongoose.isValidObjectId(params.id)) {
+    if (!mongoose.isValidObjectId(id)) {
       return NextResponse.json(
         { success: false, error: 'ID inválido' },
         { status: 400 }
@@ -57,7 +59,7 @@ export async function PUT(
     const { title, description, completed, priority, dueDate } = await request.json()
     
     const task = await Task.findByIdAndUpdate(
-      params.id,
+      id,
       {
         title,
         description,
@@ -101,19 +103,20 @@ export async function PUT(
 // DELETE - Deletar tarefa
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await dbConnect()
     
-    if (!mongoose.isValidObjectId(params.id)) {
+    if (!mongoose.isValidObjectId(id)) {
       return NextResponse.json(
         { success: false, error: 'ID inválido' },
         { status: 400 }
       )
     }
     
-    const task = await Task.findByIdAndDelete(params.id)
+    const task = await Task.findByIdAndDelete(id)
     
     if (!task) {
       return NextResponse.json(
