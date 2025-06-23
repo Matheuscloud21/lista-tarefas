@@ -12,15 +12,18 @@ No painel da Vercel (vercel.com):
 
 1. Acesse seu projeto
 2. Vá em **Settings** → **Environment Variables**
-3. Adicione esta variável:
+3. Clique **Add New**
+4. Adicione esta variável:
 
 ```
-Name: MONGODB_URI
+Key: MONGODB_URI
 Value: mongodb+srv://matheuscloud:matheuscloud21@cluster0.8thklps.mongodb.net/lista-tarefa?retryWrites=true&w=majority&appName=Cluster0
+Environment: Production, Preview, Development (selecione todos)
 ```
 
-4. Selecione **All Environments** (Production, Preview, Development)
 5. Clique **Save**
+
+**IMPORTANTE**: Não use secrets ou referências @. Adicione diretamente como Environment Variable simples.
 
 ### 2. **Verificar MongoDB Atlas**
 
