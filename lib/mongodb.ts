@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI!
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/lista-tarefa'
 
-if (!MONGODB_URI) {
-     throw new Error('Por favor, defina a variável MONGODB_URI no .env.local')
+if (!process.env.MONGODB_URI) {
+     console.warn('MONGODB_URI não definida - usando valor padrão para build')
 }
 
 // Declaração de tipo para global
