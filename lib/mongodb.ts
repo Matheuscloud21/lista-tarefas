@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+// Configuração da URI do MongoDB com fallback para desenvolvimento
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/lista-tarefa'
 
 if (!process.env.MONGODB_URI) {
