@@ -7,6 +7,8 @@ if (!process.env.MONGODB_URI) {
      console.warn('MONGODB_URI não definida - usando valor padrão para build')
 }
 
+console.log('MongoDB URI configurada:', MONGODB_URI.replace(/\/\/([^:]+):([^@]+)@/, '//[USER]:[PASSWORD]@'))
+
 // Declaração de tipo para global
 declare global {
      var mongoose: {
@@ -39,6 +41,7 @@ async function dbConnect() {
           cached.conn = await cached.promise
      } catch (e) {
           cached.promise = null
+          console.error('Erro ao conectar ao MongoDB:', e)
           throw e
      }
 
